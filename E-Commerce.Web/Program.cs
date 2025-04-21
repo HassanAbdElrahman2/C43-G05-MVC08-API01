@@ -1,4 +1,6 @@
 
+using Persistence;
+
 namespace E_Commerce.Web
 {
     public class Program
@@ -8,9 +10,12 @@ namespace E_Commerce.Web
             var builder = WebApplication.CreateBuilder(args);
 
             #region Add services to the container.
+
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi(); 
+            builder.Services.AddOpenApi();
+            builder.Services.AddPersistenceServices(builder.Configuration);
+
             #endregion
 
             var app = builder.Build();
