@@ -1,4 +1,5 @@
 
+using E_Commerce.Web.Extension;
 using Persistence;
 
 namespace E_Commerce.Web
@@ -15,15 +16,23 @@ namespace E_Commerce.Web
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddPersistenceServices(builder.Configuration);
+            builder.Services.AddSwaggerGen();
 
             #endregion
 
             var app = builder.Build();
 
+            #region InitilizeDatabase
+
+            app.InitializeDataBase();
+
+            #endregion
+
             #region Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
