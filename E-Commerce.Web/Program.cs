@@ -6,7 +6,7 @@ namespace E_Commerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +24,7 @@ namespace E_Commerce.Web
 
             #region InitilizeDatabase
 
-            app.InitializeDataBase();
+            await app.InitializeDataBase();
 
             #endregion
 

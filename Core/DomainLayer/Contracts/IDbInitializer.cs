@@ -8,7 +8,7 @@ namespace DomainLayer.Contracts
 {
     public interface IDbInitializer
     {
-        void Seed();
-        void Intialize();
+        Task SeedAsync();
+        Task IntializeAsync();
     }
 }
