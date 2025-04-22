@@ -1,4 +1,4 @@
-
+using ServiceImplementation;
 using E_Commerce.Web.Extension;
 using Persistence;
 
@@ -16,6 +16,7 @@ namespace E_Commerce.Web
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddPersistenceServices(builder.Configuration);
+            builder.Services.AddApplicationServices();
             builder.Services.AddSwaggerGen();
 
             #endregion
