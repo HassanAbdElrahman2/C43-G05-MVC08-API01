@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Contracts
+namespace ServiceAbstraction
 {
-    public interface IDbInitializer
+    public interface IServiceManager
     {
-        Task SeedAsync();
-        Task IntializeAsync();
+        public IProductService ProductService{ get; }
     }
 }

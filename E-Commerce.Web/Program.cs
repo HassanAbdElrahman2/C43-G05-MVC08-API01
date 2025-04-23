@@ -1,4 +1,4 @@
-
+using ServiceImplementation;
 using E_Commerce.Web.Extension;
 using Persistence;
 
@@ -6,7 +6,7 @@ namespace E_Commerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +16,7 @@ namespace E_Commerce.Web
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddPersistenceServices(builder.Configuration);
+            builder.Services.AddApplicationServices();
             builder.Services.AddSwaggerGen();
 
             #endregion
@@ -24,7 +25,7 @@ namespace E_Commerce.Web
 
             #region InitilizeDatabase
 
-            app.InitializeDataBase();
+            await app.InitializeDataBase();
 
             #endregion
 
@@ -36,6 +37,7 @@ namespace E_Commerce.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 

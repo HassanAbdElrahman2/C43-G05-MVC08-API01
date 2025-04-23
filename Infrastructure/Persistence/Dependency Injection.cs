@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
 using Persistence.Data.DbInitializer;
+using Persistence.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Persistence
             services.AddDbContext<StoreDBContext>
                 (optionsAction:option=>option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         }
     }
