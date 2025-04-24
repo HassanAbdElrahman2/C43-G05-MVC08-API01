@@ -9,7 +9,8 @@ namespace ServiceImplementation.Secifications
 {
     internal class ProductWithBrandsAndTypeSpecifications :BaseSecification<Product,int>
     {
-        public ProductWithBrandsAndTypeSpecifications():base(null)
+        public ProductWithBrandsAndTypeSpecifications(int? BrandId, int? TypeId) 
+            :base(P=>(!BrandId.HasValue||P.BrandId ==BrandId)&&(!TypeId.HasValue||P.TypeId==TypeId))
         {
             AddIncludeExpressions(P => P.ProductBrand);
             AddIncludeExpressions(P => P.ProductType);
