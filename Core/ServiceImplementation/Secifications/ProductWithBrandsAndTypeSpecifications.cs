@@ -10,12 +10,12 @@ namespace ServiceImplementation.Secifications
 {
     internal class ProductWithBrandsAndTypeSpecifications :BaseSecification<Product,int>
     {
-        public ProductWithBrandsAndTypeSpecifications(int? BrandId, int? TypeId, ProductSortingOptions sortingOption) 
-            :base(P=>(!BrandId.HasValue||P.BrandId ==BrandId)&&(!TypeId.HasValue||P.TypeId==TypeId))
+        public ProductWithBrandsAndTypeSpecifications(ProductQueryPrams productQueryPrams) 
+            :base(P=>(!productQueryPrams.BrandId.HasValue||P.BrandId == productQueryPrams.BrandId) &&(!productQueryPrams.TypeId.HasValue||P.TypeId==productQueryPrams.TypeId))
         {
             AddIncludeExpressions(P => P.ProductBrand);
             AddIncludeExpressions(P => P.ProductType);
-            switch (sortingOption)
+            switch (productQueryPrams.sortingOption)
             {
                 case ProductSortingOptions.NameAsc:
                     AddOrderBy(P => P.Name);
