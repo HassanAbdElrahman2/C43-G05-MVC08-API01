@@ -19,11 +19,20 @@ namespace ServiceImplementation.Secifications
         }
         public Expression<Func<TEntity, bool>>? Criteria { get; private set; }
 
-        public List<Expression<Func<TEntity, object>>> IncludeExpressions { get; }=[];
+        #region Include
+        public List<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
 
         protected void AddIncludeExpressions(Expression<Func<TEntity, object>> expression)
         {
             IncludeExpressions.Add(expression);
-        }
+        } 
+        #endregion
+
+        public Expression<Func<TEntity, object>> OrderByExp { get; private set; }
+
+        public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+
+        protected void AddOrderBy(Expression<Func<TEntity, object>> expression) => OrderByExp = expression;
+        protected void AddOrderByDescending(Expression<Func<TEntity, object>> expression) => OrderByDescending = expression;
     }
 }
