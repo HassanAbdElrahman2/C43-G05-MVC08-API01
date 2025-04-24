@@ -13,11 +13,11 @@ namespace ServiceImplementation.Secifications
         where TEntity : BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        public BaseSecification(Expression<Func<TEntity,bool>> expression)
+        public BaseSecification(Expression<Func<TEntity,bool>>? expression)
         {
             Criteria=expression;
         }
-        public Expression<Func<TEntity, bool>> Criteria { get; private set; }
+        public Expression<Func<TEntity, bool>>? Criteria { get; private set; }
 
         public List<Expression<Func<TEntity, object>>> IncludeExpressions { get; }=[];
 
