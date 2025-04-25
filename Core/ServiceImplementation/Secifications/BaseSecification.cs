@@ -31,8 +31,20 @@ namespace ServiceImplementation.Secifications
         public Expression<Func<TEntity, object>> OrderByExp { get; private set; }
 
         public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
-
         protected void AddOrderBy(Expression<Func<TEntity, object>> expression) => OrderByExp = expression;
         protected void AddOrderByDescending(Expression<Func<TEntity, object>> expression) => OrderByDescending = expression;
+
+
+        public int Take { get; private set; } 
+        public int Skip { get;  private set ; }
+        public bool IsPaginated { get ; set ; }
+        protected void AplayPagination(int PageIndex, int Pagesize)
+        {
+            IsPaginated = true;
+            Take = Pagesize;
+            Skip = (PageIndex - 1) * Pagesize;
+
+        }
+
     }
 }

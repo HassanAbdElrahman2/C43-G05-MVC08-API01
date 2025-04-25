@@ -33,7 +33,7 @@ namespace ServiceImplementation.Secifications
                     break;
             }
 
-            
+            AplayPagination(productQueryPrams.PageIndex, productQueryPrams.PageSize);            
         }
         public ProductWithBrandsAndTypeSpecifications(int id) : base(P=>P.Id==id)
         {
