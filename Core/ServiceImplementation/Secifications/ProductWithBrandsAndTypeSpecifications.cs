@@ -11,7 +11,9 @@ namespace ServiceImplementation.Secifications
     internal class ProductWithBrandsAndTypeSpecifications :BaseSecification<Product,int>
     {
         public ProductWithBrandsAndTypeSpecifications(ProductQueryPrams productQueryPrams) 
-            :base(P=>(!productQueryPrams.BrandId.HasValue||P.BrandId == productQueryPrams.BrandId) &&(!productQueryPrams.TypeId.HasValue||P.TypeId==productQueryPrams.TypeId))
+            :base(P=>(!productQueryPrams.BrandId.HasValue||P.BrandId == productQueryPrams.BrandId) 
+            &&(!productQueryPrams.TypeId.HasValue||P.TypeId==productQueryPrams.TypeId)
+            &&(String.IsNullOrWhiteSpace(productQueryPrams.SearchValue)||P.Name.ToLower().Contains(productQueryPrams.SearchValue.ToLower())))
         {
             AddIncludeExpressions(P => P.ProductBrand);
             AddIncludeExpressions(P => P.ProductType);
