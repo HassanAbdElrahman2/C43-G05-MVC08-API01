@@ -1,4 +1,5 @@
-﻿using Shared.DataTranssferObjects;
+﻿using Shared;
+using Shared.DataTranssferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ServiceAbstraction
 {
    public interface IProductService
     {
-       Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
+       Task<PaginatedResult<ProductDTO>> GetAllProductsAsync(ProductQueryPrams productQueryPrams);
        Task<IEnumerable<TypeDTO>> GetAllTypesAsync();
        Task<IEnumerable<BrandDTO>> GetAllBrandsAsync();
        Task<ProductDTO> GetProductById(int id);
