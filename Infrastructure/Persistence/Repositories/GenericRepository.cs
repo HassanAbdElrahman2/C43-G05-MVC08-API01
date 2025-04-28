@@ -30,6 +30,10 @@ namespace Persistence.Repositories
         public void Update(TEntity entity)=>_dBContext.Set<TEntity>().Update(entity);
 
         public void Delete(TEntity entity) => _dBContext.Set<TEntity>().Remove(entity);
-   
+
+        public async Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications)
+        
+           => await SpecificationEvaluator.CreateQuery<TEntity, TKey>(_dBContext.Set<TEntity>(), specifications).CountAsync();
+        
     }
 }
