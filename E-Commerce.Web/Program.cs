@@ -1,6 +1,7 @@
 using ServiceImplementation;
 using E_Commerce.Web.Extension;
 using Persistence;
+using E_Commerce.Web.CustomMiddleWares;
 
 namespace E_Commerce.Web
 {
@@ -30,6 +31,7 @@ namespace E_Commerce.Web
             #endregion
 
             #region Configure the HTTP request pipeline.
+            app.UseMiddleware<CustmExeptionHandlerMiddleWare>();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
