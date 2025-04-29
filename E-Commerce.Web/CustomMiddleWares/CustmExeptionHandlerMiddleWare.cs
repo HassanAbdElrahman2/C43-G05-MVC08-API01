@@ -1,4 +1,6 @@
-﻿using Shared.ErrorModels;
+﻿using DomainLayer.Exceptions;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.ErrorModels;
 using System.Net;
 
 namespace E_Commerce.Web.CustomMiddleWares
@@ -22,11 +24,16 @@ namespace E_Commerce.Web.CustomMiddleWares
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Somthing went Wrong");
-               // httpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError ;
-                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                // httpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError ;
+
+                httpContext.Response.StatusCode = ex switch {
+                    NotFoundException=>StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+
+                };
                 // httpContext.Response.ContentType = "application/json";
                 var Error = new ErorrToReturn()
-                {ErrorMessage=ex.Message,StatusCode= StatusCodes.Status500InternalServerError };
+                {ErrorMessage=ex.Message,StatusCode = httpContext.Response.StatusCode };
                  await httpContext.Response.WriteAsJsonAsync( Error);
                
             }
