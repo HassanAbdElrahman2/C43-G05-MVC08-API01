@@ -2,6 +2,9 @@ using ServiceImplementation;
 using E_Commerce.Web.Extension;
 using Persistence;
 using E_Commerce.Web.CustomMiddleWares;
+using Microsoft.AspNetCore.Mvc;
+using Shared.ErrorModels;
+using E_Commerce.Web.Factories;
 
 namespace E_Commerce.Web
 {
@@ -19,6 +22,13 @@ namespace E_Commerce.Web
             builder.Services.AddPersistenceServices(builder.Configuration);
             builder.Services.AddApplicationServices();
             builder.Services.AddSwaggerGen();
+            builder.Services.Configure<ApiBehaviorOptions>((Options) =>
+            {
+                Options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationErrorResponse;
+
+            });
+            
+
 
             #endregion
 
