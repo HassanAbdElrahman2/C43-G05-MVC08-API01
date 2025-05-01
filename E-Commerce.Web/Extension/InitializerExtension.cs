@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Contracts;
+using E_Commerce.Web.CustomMiddleWares;
 
 namespace E_Commerce.Web.Extension
 {
@@ -11,5 +12,11 @@ namespace E_Commerce.Web.Extension
            await Initializer.SeedAsync();
            await Initializer.IntializeAsync();
         } 
+
+        public static IApplicationBuilder UseCustomExceptionMiddleWare(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<CustmExeptionHandlerMiddleWare>();
+            return app;
+        }
     }
 }

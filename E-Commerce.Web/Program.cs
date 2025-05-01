@@ -2,10 +2,6 @@ using ServiceImplementation;
 using E_Commerce.Web.Extension;
 using Persistence;
 using E_Commerce.Web.CustomMiddleWares;
-using Microsoft.AspNetCore.Mvc;
-using Shared.ErrorModels;
-using E_Commerce.Web.Factories;
-
 namespace E_Commerce.Web
 {
     public class Program
@@ -16,23 +12,14 @@ namespace E_Commerce.Web
 
             #region Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            builder.Services.AddSwaggerServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
             builder.Services.AddApplicationServices();
-            builder.Services.AddSwaggerGen();
-            builder.Services.Configure<ApiBehaviorOptions>((Options) =>
-            {
-                Options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationErrorResponse;
-
-            });
-            
-
+            builder.Services.AddWebApplicationServices();
 
             #endregion
 
-            var app = builder.Build();
+           var app = builder.Build();
 
             #region InitilizeDatabase
 
@@ -41,7 +28,7 @@ namespace E_Commerce.Web
             #endregion
 
             #region Configure the HTTP request pipeline.
-            app.UseMiddleware<CustmExeptionHandlerMiddleWare>();
+            app.UseCustomExceptionMiddleWare();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
