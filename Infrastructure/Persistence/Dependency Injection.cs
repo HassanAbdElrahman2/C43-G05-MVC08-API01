@@ -1,4 +1,6 @@
 ﻿using DomainLayer.Contracts;
+using DomainLayer.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +33,9 @@ namespace Persistence
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddDbContext<StoreIdentityDbContext>
              (optionsAction: option => option.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
-
+            services.AddIdentityCore<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
         }
     }
 }

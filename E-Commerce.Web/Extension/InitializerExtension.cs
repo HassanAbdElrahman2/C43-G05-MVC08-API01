@@ -11,6 +11,7 @@ namespace E_Commerce.Web.Extension
             var Initializer = Scope.ServiceProvider.GetRequiredService<IDbInitializer>();
            await Initializer.SeedAsync();
            await Initializer.IntializeAsync();
+            await Initializer.IdentitySeedAsync();
         } 
 
         public static IApplicationBuilder UseCustomExceptionMiddleWare(this IApplicationBuilder app)
