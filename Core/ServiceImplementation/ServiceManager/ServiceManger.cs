@@ -21,7 +21,7 @@ namespace ServiceImplementation.ServiceManager
         public IProductService ProductService => _productService.Value;
         private readonly Lazy<IBasketService> _LazyBasketService = new Lazy<IBasketService>(() => new BasketService(_basketRepository, _mapper));
         public IBasketService BasketService=>_LazyBasketService.Value;
-        private readonly Lazy<IAuthenticationService> _LazyAuthenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager,configuration));
+        private readonly Lazy<IAuthenticationService> _LazyAuthenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager,configuration,_mapper));
         public IAuthenticationService AuthenticationService { get => _LazyAuthenticationService.Value; }
     }
 }
