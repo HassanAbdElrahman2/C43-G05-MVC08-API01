@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    [ApiController]
-    [Route("/api")]
-    public class BaskectController (IServiceManager _serviceManager):ControllerBase
+   
+    public class BaskectController (IServiceManager _serviceManager):ApiBaseController
     {
         [HttpGet]
         public async Task<ActionResult<BasketDto>> GetBasket(string Key) => Ok(await _serviceManager.BasketService.GetBasketAsync(Key));

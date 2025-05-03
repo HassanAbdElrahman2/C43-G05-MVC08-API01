@@ -26,10 +26,10 @@ namespace Persistence
                 (optionsAction:option=>option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IConnectionMultiplexer>((_) => {
-               return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
-                
-                });
+            services.AddSingleton<IConnectionMultiplexer>((_) =>
+            {
+                return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
+            });
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddDbContext<StoreIdentityDbContext>
              (optionsAction: option => option.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
