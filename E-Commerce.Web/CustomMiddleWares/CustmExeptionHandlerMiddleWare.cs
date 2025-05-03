@@ -1,4 +1,6 @@
-﻿using DomainLayer.Exceptions;
+﻿using Azure;
+using DomainLayer.Exceptions;
+using DomainLayer.Exceptions.IdentityExceptions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.ErrorModels;
 using System.Net;
@@ -34,17 +36,27 @@ namespace E_Commerce.Web.CustomMiddleWares
         private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
         {
             // httpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError ;
+            var Response= new ErorrToReturn()
+            {
+                ErrorMessage = ex.Message
+            };
 
-            httpContext.Response.StatusCode = ex switch
+            Response.StatusCode = ex switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,
+                UnauthorizedException=> StatusCodes.Status401Unauthorized,
+                BadRequestException badRequestException =>GetBadRequestErrors(badRequestException,Response),
                 _ => StatusCodes.Status500InternalServerError
 
             };
-            // httpContext.Response.ContentType = "application/json";
-            var Error = new ErorrToReturn()
-            { ErrorMessage = ex.Message, StatusCode = httpContext.Response.StatusCode };
-            await httpContext.Response.WriteAsJsonAsync(Error);
+            httpContext.Response.StatusCode=Response.StatusCode;
+            await httpContext.Response.WriteAsJsonAsync(Response);
+        }
+
+        private static int GetBadRequestErrors(BadRequestException badRequestException, ErorrToReturn response)
+        {
+          response.Errors=badRequestException.Errors;
+            return StatusCodes.Status400BadRequest;
         }
 
         private static async Task HandleNotFoundEndPointAsync(HttpContext httpContext)
