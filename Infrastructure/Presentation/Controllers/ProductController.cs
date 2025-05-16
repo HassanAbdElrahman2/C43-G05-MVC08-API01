@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
 using Shared;
 using Shared.DataTranssferObjects;
@@ -10,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController(IServiceManager _serviceManager) : ControllerBase
+   
+    public class ProductController(IServiceManager _serviceManager) : ApiBaseController
     {
+        [Authorize("Admin")]
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProdcuts([FromQuery]ProductQueryPrams productQueryPrams)
         {

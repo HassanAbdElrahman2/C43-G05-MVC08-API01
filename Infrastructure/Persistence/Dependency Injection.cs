@@ -1,9 +1,12 @@
 ﻿using DomainLayer.Contracts;
+using DomainLayer.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
 using Persistence.Data.DbInitializer;
+using Persistence.Data.Identity;
 using Persistence.Repositories;
 using Persistence.UnitOfWorks;
 using StackExchange.Redis;
@@ -23,12 +26,16 @@ namespace Persistence
                 (optionsAction:option=>option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IConnectionMultiplexer>((_) => {
-               return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
-                
-                });
+            services.AddSingleton<IConnectionMultiplexer>((_) =>
+            {
+                return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
+            });
             services.AddScoped<IBasketRepository, BasketRepository>();
-
+            services.AddDbContext<StoreIdentityDbContext>
+             (optionsAction: option => option.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+            services.AddIdentityCore<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
         }
     }
 }

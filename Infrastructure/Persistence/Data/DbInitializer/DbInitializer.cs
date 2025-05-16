@@ -1,6 +1,9 @@
 ﻿using DomainLayer.Contracts;
+using DomainLayer.Models.Identity;
 using DomainLayer.Models.Products;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Data.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +16,23 @@ namespace Persistence.Data.DbInitializer
     public class DbInitializer : IDbInitializer
     {
         private readonly StoreDBContext _dBContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly StoreIdentityDbContext _IdentitydbContext;
 
-        public DbInitializer(StoreDBContext dBContext)
+        public DbInitializer(StoreDBContext dBContext
+            ,UserManager<ApplicationUser> userManager
+            ,RoleManager<IdentityRole> roleManager,
+            StoreIdentityDbContext dbContext)
         {
             _dBContext = dBContext;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _IdentitydbContext = dbContext;
         }
+
+       
+
         public async Task IntializeAsync()
         {
             if((await _dBContext.Database.GetPendingMigrationsAsync()).Any())// Two Oprations
@@ -62,6 +77,48 @@ namespace Persistence.Data.DbInitializer
                 throw;
             }
          
+
+        }
+        public async Task IdentitySeedAsync()
+        {
+            try
+            {
+                if (!_roleManager.Roles.Any())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+                }
+
+                if (!_userManager.Users.Any())
+                {
+                    var User01 = new ApplicationUser()
+                    {
+                        Email = "Mohamed@gmail.com",
+                        DispalayName = "Mohamed Tarek",
+                        PhoneNumber = "0123456789",
+                        UserName = "MohamedTarek"
+                    };
+
+                    await _userManager.CreateAsync(User01, "P@ssw0rd");
+                    await _userManager.AddToRoleAsync(User01, "Admin");
+                    var User02 = new ApplicationUser()
+                    {
+                        Email = "Salma@gmail.com",
+                        DispalayName = "Salma Mohamed",
+                        PhoneNumber = "0123456789",
+                        UserName = "SalmaMohamed"
+                    };
+                    await _userManager.CreateAsync(User02, "P@ssw0rd");
+                    await _userManager.AddToRoleAsync(User01, "SuperAdmin");
+                }
+
+                await _IdentitydbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
 
         }
     }
