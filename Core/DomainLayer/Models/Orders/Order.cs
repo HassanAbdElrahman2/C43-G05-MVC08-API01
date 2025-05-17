@@ -18,6 +18,7 @@ namespace DomainLayer.Models.Orders
         public OrderStatus OrderStatus { get; set; }
         public ICollection<OrderItem> Items { get; set; } = [];
         public decimal SubTotal { get; set; }
+
         //[NotMapped]
         //public decimal Total { get => SubTotal + DeliveryMethod.Price; }
         public decimal GetTotal() => SubTotal + DeliveryMethod.Price;

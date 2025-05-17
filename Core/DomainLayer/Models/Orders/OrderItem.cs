@@ -9,8 +9,8 @@ namespace DomainLayer.Models.Orders
 {
     public class OrderItem : BaseEntity<int>
     {
-        ProductItemOrder Product { get; set; } = default!;
-        public decimal price  { get; set; }
+        public ProductItemOrder Product { get; set; } = default!;
+        public decimal Price  { get; set; }
         public int Quantity{ get; set; }
 
     }
