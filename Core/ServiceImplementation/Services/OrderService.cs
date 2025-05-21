@@ -6,6 +6,7 @@ using DomainLayer.Exceptions.ProductException;
 using DomainLayer.Models.Orders;
 using DomainLayer.Models.Products;
 using ServiceAbstraction;
+using ServiceImplementation.Secifications;
 using Shared.IdentityDto;
 using Shared.OrderDto;
 using System;
@@ -18,7 +19,7 @@ namespace ServiceImplementation.Services
 {
     public class OrderService(IMapper _mapper,IUnitOfWork _unitOfWork,IBasketRepository _basketRepository) : IOrderService
     {
-        public async Task<OrderToReturnDto> CreateOrder(OrderDto orderDto, string Email)
+        public async Task<OrderToReturnDto> CreateOrderAsync(OrderDto orderDto, string Email)
         {
             var AddressOrder = _mapper.Map<AddressDto, OrderAddress>(orderDto.Address);
 
@@ -49,6 +50,31 @@ namespace ServiceImplementation.Services
 
             await _unitOfWork.GetRepository<Guid, Order>().AddAsync(Order);
             await _unitOfWork.CompleteAsync();
+            return _mapper.Map<Order, OrderToReturnDto>(Order);
+        }
+
+        
+        public async Task<IEnumerable<OrderToReturnDto>> GetAllOrdersAsync(string Email)
+        {
+            var Secification = new OrderSecifications(Email);
+            var Orders=await _unitOfWork.GetRepository<Guid, Order>().GetAllAsync(Secification);
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderToReturnDto>>(Orders);
+        }
+
+        public async Task<IEnumerable<DeliveryMethodDto>> GetDeliveryMethodsAsync()
+        {
+
+           var DeliveryMethod= await _unitOfWork.GetRepository<int, DeliveryMethod>().GetAllAsync();
+                
+           return _mapper.Map<IEnumerable<DeliveryMethod>, IEnumerable<DeliveryMethodDto>>(DeliveryMethod);
+
+        }
+
+        public async Task<OrderToReturnDto> GetOrderByIdAsync(Guid Id)
+        {
+            var  Secification = new OrderSecifications(Id);
+            var Order = await _unitOfWork.GetRepository<Guid, Order>().GetByIdAsync(Secification) 
+                ??throw new OrderNotFoundException(Id);
             return _mapper.Map<Order, OrderToReturnDto>(Order);
         }
     }
