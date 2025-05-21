@@ -8,7 +8,7 @@ namespace Shared.IdentityDto
 {
     public class AddressDto
     {
-        public string FirstName { get; set; } = default!;
+        public string FristName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public string City { get; set; } = default!;
         public string Country { get; set; } = default!;
