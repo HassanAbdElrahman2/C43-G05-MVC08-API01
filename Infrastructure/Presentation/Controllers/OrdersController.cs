@@ -11,13 +11,28 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     public class OrdersController(IServiceManager _serviceManager):ApiBaseController
     {
-        [Authorize]
+       
         [HttpPost]
         public async Task<ActionResult<OrderToReturnDto>> CreateOrderAsync(OrderDto orderDto)
-            => Ok(await _serviceManager.OrderService.CreateOrder(orderDto, GetEmailFromToken()));
+            => Ok(await _serviceManager.OrderService.CreateOrderAsync(orderDto, GetEmailFromToken()));
+        [AllowAnonymous]
+        [HttpGet("DeliveryMethods")]
+        public async Task<ActionResult<IEnumerable<DeliveryMethodDto>>> GetAllDeliveryMethods()
+             => Ok(await _serviceManager.OrderService.GetDeliveryMethodsAsync());
 
-        
+
+       
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OrderToReturnDto>>> GetAllOrders()
+            => Ok(await _serviceManager.OrderService.GetAllOrdersAsync(GetEmailFromToken()));
+
+       
+        [HttpGet("{Id:guid}")]
+        public async Task <ActionResult<OrderToReturnDto>> GetOrderById(Guid Id)
+            => Ok(await _serviceManager.OrderService.GetOrderByIdAsync(Id));
+
     }
 }
