@@ -1,5 +1,6 @@
 ﻿using DomainLayer.Contracts;
 using DomainLayer.Models.Identity;
+using DomainLayer.Models.Orders;
 using DomainLayer.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +68,13 @@ namespace Persistence.Data.DbInitializer
                     var Products =await JsonSerializer.DeserializeAsync<List<Product>>(ProductsStrings);
                     if (Products is not null && Products.Any())
                        await _dBContext.Products.AddRangeAsync(Products);
+                }
+                if (!await (_dBContext.Set<DeliveryMethod>().AnyAsync()))
+                {
+                    var deliveryStrings = File.OpenRead(@"..\Infrastructure\Persistence\Data\DataSeed\delivery.json");
+                    var deliveries = await JsonSerializer.DeserializeAsync<List<DeliveryMethod>>(deliveryStrings);
+                    if (deliveries is not null && deliveries.Any())
+                        await _dBContext.Set<DeliveryMethod>().AddRangeAsync(deliveries);
                 }
 
                 await _dBContext.SaveChangesAsync();

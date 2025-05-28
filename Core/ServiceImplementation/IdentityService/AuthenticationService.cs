@@ -41,7 +41,7 @@ namespace ServiceImplementation.IdentityService
                  .Include(x => x.Address).FirstOrDefaultAsync(U => U.Email == Email) ?? throw new UserNotFoundException(Email);
             if (User.Address is not null)
             {
-                User.Address.FirstName = addressDto.FirstName;
+                User.Address.FirstName = addressDto.FristName;
                 User.Address.LastName = addressDto.LastName;
                 User.Address.City = addressDto.City;
                 User.Address.Country = addressDto.Country;
