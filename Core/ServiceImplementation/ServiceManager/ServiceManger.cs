@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ServiceImplementation.ServiceManager
 {
-    public class ServiceManger(IUnitOfWork _unitOfWork,IMapper _mapper ,IBasketRepository _basketRepository,UserManager<ApplicationUser> userManager, IConfiguration configuration) : IServiceManager
+    public class ServiceManger(IUnitOfWork _unitOfWork,IMapper _mapper ,IBasketRepository _basketRepository,UserManager<ApplicationUser> userManager, IConfiguration configuration) 
     {
         
         private readonly Lazy<IProductService>  _productService=new Lazy<IProductService>(()=>new ProductService(_unitOfWork,_mapper));
