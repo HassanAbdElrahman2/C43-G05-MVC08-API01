@@ -36,6 +36,7 @@ namespace Persistence
             services.AddIdentityCore<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreIdentityDbContext>();
+            services.AddScoped<ICacheRepository, CacheRepository>();
         }
     }
 }

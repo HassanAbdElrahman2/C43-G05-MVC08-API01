@@ -1,10 +1,12 @@
 ﻿
+using DomainLayer.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceAbstraction;
 using ServiceImplementation.IdentityService;
 using ServiceImplementation.MappingProfiles;
 using ServiceImplementation.ServiceManager;
 using ServiceImplementation.Services;
+
 
 namespace ServiceImplementation
 {
@@ -30,6 +32,8 @@ namespace ServiceImplementation
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<Func<IOrderService>>(Providor =>
             () => Providor.GetRequiredService<IOrderService>());
+
+            services.AddScoped<ICacheService, CacheService>();
 
             return services;
         }

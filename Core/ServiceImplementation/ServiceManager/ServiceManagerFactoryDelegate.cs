@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace ServiceImplementation.ServiceManager
 {
     public class ServiceManagerFactoryDelegate
-        (Func<IProductService> ProductProvidor, Func<IBasketService> BasketProvidor,Func<IAuthenticationService> AuthenticationProvidor,Func<IOrderService> OrderProvidor) : IServiceManager
+        (Func<IProductService> ProductProvidor, Func<IBasketService> BasketProvidor
+        ,Func<IAuthenticationService> AuthenticationProvidor,Func<IOrderService> OrderProvidor) : IServiceManager
     {
         public IProductService ProductService => ProductProvidor.Invoke();
         public IBasketService BasketService => BasketProvidor.Invoke();
