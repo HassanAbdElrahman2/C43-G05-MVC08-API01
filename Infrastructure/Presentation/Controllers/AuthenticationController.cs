@@ -21,7 +21,7 @@ namespace Presentation.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         => Ok(await _serviceManager.AuthenticationService.RegisterAsync(registerDto));
 
-        [HttpGet("CheckEmail")]
+        [HttpGet("emailexists")]
         public async Task<ActionResult<bool>> CheckEmail(string Email)
             => Ok(await _serviceManager.AuthenticationService.CheckEmailAsync(Email));
 

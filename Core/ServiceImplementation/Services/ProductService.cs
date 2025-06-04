@@ -42,7 +42,7 @@ namespace ServiceImplementation.Services
             var count = ProductsDto.Count();
             var Specification = new ProductCountSpecification(productQueryPrams);
             var Total = await Repo.CountAsync(Specification);
-            var result = new PaginatedResult<ProductDTO>(productQueryPrams.PageIndex,count,Total, ProductsDto);
+            var result = new PaginatedResult<ProductDTO>(productQueryPrams.pageNumber,count,Total, ProductsDto);
             return result;
         }
 

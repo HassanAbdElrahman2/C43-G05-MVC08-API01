@@ -12,17 +12,17 @@ namespace Shared
         private const int maxPageSize=10;
        public int? BrandId { get;set; }
        public int? TypeId { get; set; }
-       public ProductSortingOptions sortingOption { get; set; }
-       public string? SearchValue { get; set; }
-        private int _PageSize=minPageSize;
+       public ProductSortingOptions sort { get; set; }
+       public string? search { get; set; }
+       private int pageSize=minPageSize;
 
         public int PageSize
         {
-            get { return _PageSize; }
-            set { _PageSize = value>maxPageSize?maxPageSize:value; }
+            get { return pageSize; }
+            set { pageSize = value>maxPageSize?maxPageSize:value; }
         }
 
-        public int PageIndex { get; set; } = 1;
+        public int pageNumber { get; set; } = 1;
 
     }
 }

@@ -10,7 +10,7 @@ namespace ServiceImplementation.Secifications
 {
     public class OrderSecifications:BaseSecification<Order,Guid>
     {
-        public OrderSecifications(string Email):base(E=>E.UserEmail==Email)
+        public OrderSecifications(string Email):base(E=>E.BuyerEmail==Email)
         {
             AddIncludeExpressions(E => E.DeliveryMethod);
             AddIncludeExpressions(E => E.Items);

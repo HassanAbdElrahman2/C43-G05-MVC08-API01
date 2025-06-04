@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Presentation.Controllers
 {
    
-    public class ProductController(IServiceManager _serviceManager) : ApiBaseController
+    public class ProductsController(IServiceManager _serviceManager) : ApiBaseController
     {
         
         [HttpGet]

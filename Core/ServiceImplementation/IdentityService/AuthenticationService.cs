@@ -30,10 +30,9 @@ namespace ServiceImplementation.IdentityService
         {
             var User= await _userManager.Users
                 .Include(x => x.Address).FirstOrDefaultAsync(U=>U.Email==Email)??throw new UserNotFoundException(Email);
-            if (User.Address is not null)
+            
                 return _mapper.Map<Address, AddressDto>(User.Address);
-            else
-                throw new AddressNotFoundException(User.UserName);
+           
         }
         public async Task<AddressDto> UpdateCurrentUserAddressAsync(string Email, AddressDto addressDto)
         {
@@ -41,7 +40,7 @@ namespace ServiceImplementation.IdentityService
                  .Include(x => x.Address).FirstOrDefaultAsync(U => U.Email == Email) ?? throw new UserNotFoundException(Email);
             if (User.Address is not null)
             {
-                User.Address.FirstName = addressDto.FristName;
+                User.Address.FirstName = addressDto.FirstName;
                 User.Address.LastName = addressDto.LastName;
                 User.Address.City = addressDto.City;
                 User.Address.Country = addressDto.Country;
@@ -77,7 +76,7 @@ namespace ServiceImplementation.IdentityService
         {
             var User = new ApplicationUser()
             {
-                DispalayName = registerDto.Email,
+                DispalayName = registerDto.DisplayName,
                 Email = registerDto.Email,
                 PhoneNumber = registerDto.PhoneNumber,
                 UserName = registerDto.UserName

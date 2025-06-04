@@ -13,7 +13,7 @@ namespace ServiceImplementation.Secifications
         public ProductCountSpecification(ProductQueryPrams productQueryPrams)
              : base(P=>(!productQueryPrams.BrandId.HasValue||P.BrandId == productQueryPrams.BrandId) 
             &&(!productQueryPrams.TypeId.HasValue||P.TypeId==productQueryPrams.TypeId)
-            &&(String.IsNullOrWhiteSpace(productQueryPrams.SearchValue)||P.Name.ToLower().Contains(productQueryPrams.SearchValue.ToLower())))
+            &&(String.IsNullOrWhiteSpace(productQueryPrams.search)||P.Name.ToLower().Contains(productQueryPrams.search.ToLower())))
         {
          
     }

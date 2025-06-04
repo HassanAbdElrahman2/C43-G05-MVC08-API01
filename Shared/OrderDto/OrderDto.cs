@@ -6,6 +6,6 @@ namespace Shared.OrderDto
     {
         public string BasketId { get; set; } = default!;
         public int DevliveryMethodId { get; set; }
-        public AddressDto Address { get; set; } = default!;
+        public AddressDto shipToAddress { get; set; } = default!;
     }
 }

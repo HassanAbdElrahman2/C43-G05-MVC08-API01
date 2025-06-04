@@ -21,7 +21,7 @@ namespace ServiceImplementation.Services
     {
         public async Task<OrderToReturnDto> CreateOrderAsync(OrderDto orderDto, string Email)
         {
-            var AddressOrder = _mapper.Map<AddressDto, OrderAddress>(orderDto.Address);
+            var AddressOrder = _mapper.Map<AddressDto, OrderAddress>(orderDto.shipToAddress);
 
             var DeliveryMethod = await _unitOfWork.GetRepository<int, DeliveryMethod>()
                 .GetByIdAsync(orderDto.DevliveryMethodId) ?? throw new DeliveryMethodNotFoundException(orderDto.DevliveryMethodId);
